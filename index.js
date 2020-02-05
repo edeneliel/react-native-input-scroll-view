@@ -133,7 +133,7 @@ export default class extends PureComponent {
                     <ScrollComponent ref={this._onRef}
                                      onFocus={this._onFocus}
                                      onBlur={this._onBlur} {...otherProps}>
-                        <View onStartShouldSetResponderCapture={isIOS ? this._onTouchStart : null}>
+                        <View style={innerViewStyle} onStartShouldSetResponderCapture={isIOS ? this._onTouchStart : null}>
                             {newChildren}
                             <View style={styles.hidden}
                                   pointerEvents="none">
