@@ -66,6 +66,7 @@ export default class extends PureComponent {
     static propTypes = {
         topOffset: PropTypes.number,
         keyboardOffset: PropTypes.number,
+        innerViewStyle: PropTypes.object,
         multilineInputStyle: PropTypes.oneOfType([
             PropTypes.object,
             PropTypes.array,
@@ -77,6 +78,7 @@ export default class extends PureComponent {
 
     static defaultProps = {
         keyboardOffset: 40,
+        innerViewStyle: null,
         multilineInputStyle: null,
         useAnimatedScrollView: false,
         keyboardAvoidingViewProps: null
@@ -88,13 +90,14 @@ export default class extends PureComponent {
         measureInputWidth: 0,
     };
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         this._root = null;
         this._curFocus = null;
         this._measureCallback = null;
         this._keyboardShow = false;
         this._inputInfoMap = {};
-        this._topOffset = this.props.topOffset;
+        this._topOffset = props.topOffset;
 
         this._addListener();
         this._extendScrollViewFunc();
@@ -115,7 +118,7 @@ export default class extends PureComponent {
             children,
             ...otherProps
         } = this.props;
-
+        
         const kavProps = Object.assign({ behavior: isIOS ? 'padding' : null }, keyboardAvoidingViewProps);
 
         const {
@@ -167,12 +170,10 @@ export default class extends PureComponent {
     }
 
     _extendScrollViewFunc() {
-        const funcArray = [
+        [
             'scrollTo',
             'scrollToEnd',
-        ];
-
-        funcArray.forEach(funcName => {
+        ].forEach(funcName => {
             this[funcName] = (...args) => {
                 this._root[funcName](...args);
             };
@@ -454,7 +455,7 @@ function focus(targetTag) {
         // 在 react-native v0.57 版本中（也可能更早），UIManager.focus 不再有效
         TextInput.State && TextInput.State.focusTextInput(targetTag);
     } else {
-        const AndroidTextInput = UIManager.getViewManagerConfig 
+        const AndroidTextInput = UIManager.getViewManagerConfig
             && UIManager.getViewManagerConfig('AndroidTextInput')
             || UIManager.AndroidTextInput;
         UIManager.dispatchViewManagerCommand(
