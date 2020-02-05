@@ -108,6 +108,7 @@ export default class extends PureComponent {
         const {
             topOffset,
             keyboardOffset,
+            innerViewStyle,
             multilineInputStyle,
             useAnimatedScrollView,
             keyboardAvoidingViewProps,
