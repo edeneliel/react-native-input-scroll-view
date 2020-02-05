@@ -4,6 +4,7 @@ import { ScrollViewProperties, TextStyle, ScrollView } from 'react-native';
 export interface InputScrollViewProps extends ScrollViewProperties {
   readonly topOffset?: number;
   readonly keyboardOffset?: number;
+  readonly innerViewStyle?: object;
   readonly multilineInputStyle?: TextStyle;
   readonly useAnimatedScrollView?: boolean;
   readonly keyboardAvoidingViewProps?: object;
